@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
 const { UnauthorizedError } = require("../errors");
 const HttpError = require("../errors/httpError");
+const { verifyToken } = require("../utils/authUtils");
 
 const isAuth = (req, res, next) => {
 	const token = req.cookies.token;
@@ -10,7 +10,7 @@ const isAuth = (req, res, next) => {
 			throw new UnauthorizedError("Token not found!");
 		}
 
-		const user = jwt.verify(token, process.env.JWT_SECRET);
+		const user = verifyToken(token);
 
 		if (!user) {
 			throw new UnauthorizedError("Invalid token!");
@@ -30,3 +30,5 @@ const isAuth = (req, res, next) => {
 		});
 	}
 };
+
+module.exports = isAuth;

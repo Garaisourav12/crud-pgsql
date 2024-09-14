@@ -3,8 +3,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 
 // File Imports
-const { PORT } = require("./config/envConfig");
-const connectDB = require("./config/db");
+const { PORT } = require("./envConfig");
 const routes = require("./routes");
 const { NotFoundError } = require("./errors");
 
@@ -21,9 +20,6 @@ const port = PORT || 5000;
 app.use(express.json());
 app.use(cookieParser());
 app.use(cors(corsOptions));
-
-// Db Connection
-connectDB();
 
 // Entry Point
 app.get("/", (req, res) => {
