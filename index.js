@@ -6,6 +6,8 @@ const cookieParser = require("cookie-parser");
 const { PORT } = require("./envConfig");
 const routes = require("./routes");
 const { NotFoundError } = require("./errors");
+const { User, Todo } = require("./models");
+const { where } = require("sequelize");
 
 // Constants
 const app = express();

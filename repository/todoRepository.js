@@ -1,9 +1,11 @@
 const { InternalServerError } = require("../errors");
-const Todo = require("../models/todo");
+const { Todo } = require("../models");
 
-const getAllTodos = async () => {
+const getAllTodos = async (id) => {
 	try {
-		return await Todo.findAll();
+		return await Todo.findAll({
+			where: { ownerId: id },
+		});
 	} catch (error) {
 		throw new InternalServerError(
 			"Internal Server Error: " + error.message

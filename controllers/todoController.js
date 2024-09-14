@@ -3,8 +3,9 @@ const todoRepository = require("../repository/todoRepository");
 const { dataMissing } = require("../utils/commonUtils");
 
 const getAllTodos = async (req, res) => {
+	const { id } = req.user;
 	try {
-		const todos = await todoRepository.getAllTodos();
+		const todos = await todoRepository.getAllTodos(id);
 
 		return res.status(200).json({
 			success: true,
@@ -48,6 +49,7 @@ const getTodoById = async (req, res) => {
 
 const createTodo = async (req, res) => {
 	const { title, description } = req.body;
+	const { id } = req.user;
 
 	try {
 		if (dataMissing(title, description)) {
@@ -57,6 +59,7 @@ const createTodo = async (req, res) => {
 		const todo = await todoRepository.createTodo({
 			title,
 			description,
+			ownerId: id,
 		});
 
 		return res.status(201).json({
